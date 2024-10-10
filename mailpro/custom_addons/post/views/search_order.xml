@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="search_order_template" name="Search Order Page">
+        <t name="Any Search Results" t-name="website.list_hybrid">
+            <t t-call="website.layout">
+                <div id="wrap">
+                    <div class="container pt24 pb24">
+                        <!-- Custom Search Form -->
+                        <form action="/search-order/" method="post" class="form-inline">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <div class="form-group mb-2">
+                                <label for="track_id" class="sr-only">Track ID</label>
+                                <input type="text" id="track_id" name="track_id" class="form-control" placeholder="Enter Track ID" />
+                            </div>
+                            <button type="submit" class="btn btn-primary mb-2">Search</button>
+                        </form>
+
+                        <div class="mt24 h3">Search Results</div>
+                        <t t-if="not results">
+                            <div class="alert alert-warning mt8" role="alert">
+                                <t t-if="search">
+                                    Your search for Track ID '<t t-esc="search"/>' did not match anything.
+                                </t>
+                                <t t-else="">
+                                    Specify a Track ID.
+                                </t>
+                            </div>
+                        </t>
+                        <div t-if="results" class="table-responsive">
+                            <t t-esc="results.name" />
+                            <h3>
+                                <t t-esc="results.state"/>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
